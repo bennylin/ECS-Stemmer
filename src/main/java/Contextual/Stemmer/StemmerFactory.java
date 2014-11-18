@@ -30,7 +30,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public class StemmerFactory {
     protected boolean debug = true;

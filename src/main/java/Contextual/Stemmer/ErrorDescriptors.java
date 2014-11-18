@@ -21,7 +21,7 @@
 package Contextual.Stemmer;
 
 /**
- * Created by samiunn on 18/11/14.
+ * Created by Sami on 18/11/14.
  */
 public enum ErrorDescriptors {
     DICTIONARY_FILE_ERROR(111),

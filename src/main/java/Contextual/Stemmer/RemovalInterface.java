@@ -23,7 +23,7 @@ package Contextual.Stemmer;
 import Contextual.Stemmer.Visitor.VisitorInterface;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public interface RemovalInterface {
     public VisitorInterface getVisitor();

@@ -21,7 +21,7 @@
 package Contextual.Stemmer.StopwordRemover;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 class StopwordRemoverFactory {
 

@@ -21,15 +21,14 @@
 package Contextual.Stemmer.Visitor;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public class VisitorProvider {
     protected DontStemShortWord[] visitors;
     protected suffixVisitors[]=new
 
-    RemoveInflectionalParticle()
-
-    .
+    RemoveInflectionalParticle();
+    //will be implemented after finishing up removeinflectional classes
 
 
 }

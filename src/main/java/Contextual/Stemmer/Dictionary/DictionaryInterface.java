@@ -21,7 +21,7 @@
 package Contextual.Stemmer.Dictionary;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public interface DictionaryInterface {
     public boolean contains(String word);

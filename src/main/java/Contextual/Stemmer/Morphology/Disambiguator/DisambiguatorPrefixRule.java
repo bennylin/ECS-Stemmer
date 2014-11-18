@@ -21,7 +21,7 @@
 package Contextual.Stemmer.Morphology.Disambiguator;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public class DisambiguatorPrefixRule {
 }

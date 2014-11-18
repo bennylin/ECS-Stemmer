@@ -20,8 +20,47 @@
 
 package Contextual.Stemmer;
 
+import Contextual.Stemmer.Visitor.VisitorInterface;
+
 /**
  * Created by M.Sami on 17/11/14.
  */
 public class Removal {
+
+
+    protected VisitorInterface visitor;
+    protected String subject, result, removedPart, affixType;
+
+    public Removal(VisitorInterface visitor,
+                   String subject,
+                   String result,
+                   String removedPart,
+                   String affixType) {
+        this.visitor = visitor;
+        this.subject = subject;
+        this.result = result;
+        this.removedPart = removedPart;
+        this.affixType = affixType;
+    }
+
+    public VisitorInterface getVisitor() {
+        return this.visitor;
+    }
+
+    public String getSubject() {
+        return this.subject;
+    }
+
+    public String getResult() {
+        return this.result;
+    }
+
+    public String getRemovedPart() {
+        return this.removedPart;
+    }
+
+    public String getAffixType() {
+        return this.affixType;
+    }
+
 }

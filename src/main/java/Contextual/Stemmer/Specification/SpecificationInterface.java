@@ -21,7 +21,7 @@
 package Contextual.Stemmer.Specification;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public interface SpecificationInterface {
     public boolean isSatisfiedBy(String value);

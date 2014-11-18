@@ -25,21 +25,30 @@ import Contextual.Stemmer.Visitor.VisitableInterface;
 import Contextual.Stemmer.Visitor.VisitorInterface;
 import Contextual.Stemmer.Visitor.VisitorProvider;
 
+import java.util.List;
+
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public class Context implements ContextInterface, VisitableInterface {
 
     protected boolean processIsStopped = false;
     protected String originalWord, currentWord;
-    protected RemovalInterface[] removals;
+    protected List<RemovalInterface> removals;
     protected DictionaryInterface dictionary;
     protected VisitorProvider visitorProvider;
     protected VisitorInterface[] visitors, suffixVisitors, prefixVisitors;
     protected String result;
 
-    public Context() {
-        //to be implemented
+    public Context(String originalWord,
+                   DictionaryInterface dictionary,
+                   VisitorProvider visitorProvider) {
+        this.originalWord = originalWord;
+        this.currentWord = this.originalWord;
+        this.dictionary = dictionary;
+        this.visitorProvider = visitorProvider;
+
+        this.initVisitors();
     }
 
     public void execute() {
@@ -48,12 +57,64 @@ public class Context implements ContextInterface, VisitableInterface {
 
     protected void initVisitors() {
         this.visitors = this.visitorProvider.getVisitors();
+        this.suffixVisitors = this.visitorProvider.getSuffixVisitors();
+        this.prefixVisitors = this.visitorProvider.getPrefixVisitors();
+        //to be implemented after finishing up VisitorProvider
     }
-    //to be implemented after finishing the VisitorProvider class
 
+    public String getOriginalWord() {
+        return null;
+    }
+
+    public String getCurrentWord() {
+        return this.currentWord;
+    }
+
+    public void setCurrentWord(String word) {
+        this.currentWord = word;
+    }
+
+    public DictionaryInterface getDictionary() {
+        return this.dictionary;
+    }
+
+    public void stopProcess() {
+        this.processIsStopped = true;
+    }
 
     public boolean processIsStopped() {
         return this.processIsStopped;
     }
 
-}
+    public void addRemoval(RemovalInterface removal) {
+        this.removals = removal;
+    }
+
+    public RemovalInterface[] getRemovals() {
+        return this.removals.toArray();
+    }
+
+    public void accept(VisitorInterface visitor) {
+
+    }
+
+    /**
+     * Restore prefix to proceed with ECS loop pengembalian akhiran
+     *
+     * @return void
+     */
+    public void restorePrefix() {
+        for (RemovalInterface removal : this.removals) {
+            if (removal.getAffixType().equals("DP")) {
+                // return the word before precoding (the subject of first prefix removal)
+                this.setCurrentWord(removal.getSubject());
+                break;
+            }
+        }
+
+        for ($this -> removals as $i =>$removal){
+            if ($removal -> getAffixType() == 'DP') {
+                unset($this -> removals[$i]);
+            }
+        }
+    }

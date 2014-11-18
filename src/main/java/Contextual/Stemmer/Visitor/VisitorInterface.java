@@ -23,7 +23,7 @@ package Contextual.Stemmer.Visitor;
 import Contextual.Stemmer.ContextInterface;
 
 /**
- * Created by samiunn on 17/11/14.
+ * Created by Sami on 17/11/14.
  */
 public interface VisitorInterface {
     public void visit(ContextInterface context);

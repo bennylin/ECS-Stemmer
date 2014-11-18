@@ -29,7 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by samiunn on 18/11/14.
+ * Created by Sami on 18/11/14.
  */
 public class StringUtils {
 
