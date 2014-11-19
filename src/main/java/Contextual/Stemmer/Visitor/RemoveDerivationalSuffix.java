@@ -20,8 +20,21 @@
 
 package Contextual.Stemmer.Visitor;
 
+import Contextual.Stemmer.Removal;
+
 /**
  * Created by Sami on 17/11/14.
  */
-public class RemoveDerivationalSuffix {
+public class RemoveDerivationalSuffix extends AbstractRemoveAffixes {
+
+    @Override
+    void setRemoval() {
+        this.removal = new Removal(this,
+                context.getCurrentWord(),
+                result,
+                removedPart,
+                EnumRemovalRules.REMOVE_DERIVATIONAL_SUFFIX.getAffixType());
+        this.regexRule = EnumRemovalRules.REMOVE_DERIVATIONAL_SUFFIX.getAffixType();
+    }
+
 }

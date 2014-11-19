@@ -20,24 +20,34 @@
 
 package Contextual.Stemmer.Visitor;
 
+import Contextual.Stemmer.ContextInterface;
 import Contextual.Stemmer.Removal;
 
 /**
- * Remove Inflectional particle.
- * <p/>
- * Asian J. (2007) “Effective Techniques for Indonesian Text Retrieval”. page 60
- *
- * @link http://researchbank.rmit.edu.au/eserv/rmit:6312/Asian.pdf
+ * Created by samiunn on 18/11/14.
  */
-public class RemoveInflectionalParticle extends AbstractRemoveAffixes {
+public abstract class AbstractRemoveAffixes implements VisitorInterface {
+    Removal removal;
+    ContextInterface context;
+    String result, removedPart;
+    String regexRule, replacement;
 
     @Override
-    void setRemoval() {
-        this.removal = new Removal(this,
-                context.getCurrentWord(),
-                result,
-                removedPart,
-                EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE.getAffixType());
-        this.regexRule = EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE.getAffixType();
+    public void visit(ContextInterface context) {
+        this.context = context;
+        result = this.remove(context.getCurrentWord());
+        if (!result.equals(context.getCurrentWord())) {
+            removedPart = context.getCurrentWord().replaceAll("/" + result + "/", "");
+            setRemoval();
+            context.addRemoval(removal);
+            context.setCurrentWord(result);
+        }
+    }
+
+    abstract void setRemoval();
+
+    public String remove(String word) //to be translated
+    {
+        return word.replaceAll(regexRule, replacement);
     }
 }

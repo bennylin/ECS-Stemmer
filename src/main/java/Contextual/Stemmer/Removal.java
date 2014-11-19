@@ -25,7 +25,7 @@ import Contextual.Stemmer.Visitor.VisitorInterface;
 /**
  * Created by M.Sami on 17/11/14.
  */
-public class Removal {
+public class Removal implements RemovalInterface {
 
 
     protected VisitorInterface visitor;

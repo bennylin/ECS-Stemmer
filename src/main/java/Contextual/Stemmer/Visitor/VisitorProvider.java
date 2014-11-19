@@ -20,14 +20,40 @@
 
 package Contextual.Stemmer.Visitor;
 
+import Contextual.Stemmer.Morphology.Disambiguator.DisambiguatorPrefixRules;
+
+import java.util.List;
+
 /**
  * Created by Sami on 17/11/14.
  */
 public class VisitorProvider {
-    protected DontStemShortWord[] visitors;
-    protected suffixVisitors[]=new
+    protected List<DontStemShortWord> visitors;
+    protected List<RemoveAffixes> suffixVisitors;
+    protected List<RemoveAffixes> prefixVisitors;
 
-    RemoveInflectionalParticle();
+    public VisitorProvider() {
+        this.initVisitors();
+    }
+
+    public void setSuffixVisitors(RemoveAffixes suffixVisitor) {
+        //setter for the list of suffixes
+        this.suffixVisitors.add(suffixVisitor);
+    }
+
+    protected void initVisitors() {
+        visitors.add(new DontStemShortWord());
+
+        this.suffixVisitors.add(new RemoveAffixes(EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE)); // {lah|kah|tah|pun}
+        this.suffixVisitors.add(new RemoveAffixes(EnumRemovalRules.REMOVE_INFLECTIONAL_POSSESSIVE_PRONOUN)); // {ku|mu|nya}
+        this.suffixVisitors.add(new RemoveAffixes(EnumRemovalRules.REMOVE_DERIVATIONAL_SUFFIX)); // {i|kan|an}
+
+        this.prefixVisitors.add(new RemoveAffixes(EnumRemovalRules.REMOVE_PLAIN_PREFIX));
+        this.prefixVisitors.add(new PrefixDisambiguator(new DisambiguatorPrefixRules));
+
+
+    }
+
     //will be implemented after finishing up removeinflectional classes
 
 

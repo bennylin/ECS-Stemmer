@@ -23,5 +23,9 @@ package Contextual.Stemmer.Morphology.Disambiguator;
 /**
  * Created by Sami on 17/11/14.
  */
-public class DisambiguatorInterface {
+public interface DisambiguatorInterface {
+    final String regexRules = new String();
+
+    public String disambiguate(String word);
+
 }

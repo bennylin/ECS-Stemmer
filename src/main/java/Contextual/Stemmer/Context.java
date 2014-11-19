@@ -87,11 +87,11 @@ public class Context implements ContextInterface, VisitableInterface {
     }
 
     public void addRemoval(RemovalInterface removal) {
-        this.removals = removal;
+        this.removals.add(removal);
     }
 
     public RemovalInterface[] getRemovals() {
-        return this.removals.toArray();
+        return (RemovalInterface[]) this.removals.toArray();
     }
 
     public void accept(VisitorInterface visitor) {

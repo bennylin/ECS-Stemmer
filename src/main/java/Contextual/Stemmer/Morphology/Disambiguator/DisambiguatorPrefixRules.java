@@ -18,26 +18,21 @@
  * SOFTWARE.
  */
 
-package Contextual.Stemmer.Visitor;
-
-import Contextual.Stemmer.Removal;
+package Contextual.Stemmer.Morphology.Disambiguator;
 
 /**
- * Remove Inflectional particle.
- * <p/>
- * Asian J. (2007) “Effective Techniques for Indonesian Text Retrieval”. page 60
- *
- * @link http://researchbank.rmit.edu.au/eserv/rmit:6312/Asian.pdf
+ * Created by Sami on 17/11/14.
  */
-public class RemoveInflectionalParticle extends AbstractRemoveAffixes {
+public class DisambiguatorPrefixRules implements DisambiguatorInterface {
+
+    public DisambiguatorPrefixRules() {
+        String[] test = new String[5];
+
+    }
+
 
     @Override
-    void setRemoval() {
-        this.removal = new Removal(this,
-                context.getCurrentWord(),
-                result,
-                removedPart,
-                EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE.getAffixType());
-        this.regexRule = EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE.getAffixType();
+    public String disambiguate(String word) {
+        return null;
     }
 }

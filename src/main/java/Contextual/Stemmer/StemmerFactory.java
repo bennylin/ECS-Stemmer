@@ -60,7 +60,7 @@ public class StemmerFactory {
             dictFile = new File(dictionaryFile);
             if (!dictFile.canRead()) {
                 System.out.println("Missing or incorrect permission for dictionary file");
-                System.exit(ErrorDescriptors.DICTIONARY_FILE_ERROR.getErrCode());
+                System.exit(ErrorDescriptorsEnum.DICTIONARY_FILE_ERROR.getErrCode());
             }
             try {
                 contents = Files.toString(dictFile, Charset.defaultCharset());
@@ -73,7 +73,7 @@ public class StemmerFactory {
 
         if (contents.isEmpty()) {
             System.out.println("Dictionary file is empty, exiting...\n");
-            System.exit(ErrorDescriptors.DICTIONARY_CONTENTS_ERROR.getErrCode());
+            System.exit(ErrorDescriptorsEnum.DICTIONARY_CONTENTS_ERROR.getErrCode());
         }
         split = StringUtils.explode("\n", contents);
         return split;

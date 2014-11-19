@@ -29,9 +29,9 @@ public interface ContextInterface {
 
     public String getOriginalWord();
 
-    public void setCurrentWord();
-
     public String getCurrentWord();
+
+    public void setCurrentWord(String result);
 
     public DictionaryInterface getDictionary();
 

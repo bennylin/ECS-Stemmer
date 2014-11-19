@@ -18,10 +18,23 @@
  * SOFTWARE.
  */
 
-package Contextual.Stemmer.Morphology.Disambiguator;
+package Contextual.Stemmer;
 
 /**
- * Created by Sami on 17/11/14.
+ * Created by Sami on 18/11/14.
  */
-public class DisambiguatorPrefixRule {
+public enum ErrorDescriptorsEnum {
+    DICTIONARY_FILE_ERROR(111),
+    DICTIONARY_CONTENTS_ERROR(112),
+    UNKNOWN_ERROR(221);
+
+    private final int errCode;
+
+    ErrorDescriptorsEnum(int errCode) {
+        this.errCode = errCode;
+    }
+
+    public int getErrCode() {
+        return errCode;
+    }
 }

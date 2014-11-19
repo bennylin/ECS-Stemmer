@@ -46,7 +46,7 @@ public class Stemmer implements StemmerInterface {
     public String stem(String text) {
         String normalizedText = TextNormalizer.normalizeText(text);
         String[] words = StringUtils.explode(" ", normalizedText);
-        String[] stems = new String[words.length] ();
+        String[] stems = new String[words.length];
 
 
         return text;

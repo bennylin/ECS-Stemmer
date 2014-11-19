@@ -20,8 +20,58 @@
 
 package Contextual.Stemmer.Visitor;
 
+import Contextual.Stemmer.ContextInterface;
+import Contextual.Stemmer.Morphology.Disambiguator.DisambiguatorInterface;
+import Contextual.Stemmer.Removal;
+
+import java.util.List;
+
 /**
  * Created by Sami on 17/11/14.
  */
-public class AbstractDisambiguatePrefixRule {
+public class AbstractDisambiguatePrefixRule implements VisitorInterface {
+
+    protected List<DisambiguatorInterface> disambiguators;
+
+    @Override
+    public void visit(ContextInterface context) {
+        String result = new String();
+
+        for (DisambiguatorInterface disambiguator : disambiguators) {
+            result = disambiguator.disambiguate(context.getCurrentWord());
+
+            if (context.getDictionary().contains(result))
+                break;
+        }
+        if (result.isEmpty())
+            return;
+
+        String removedPart = context.getCurrentWord().replaceFirst("/" + result + "/", "");
+        Removal removal = new Removal(
+                this,
+                context.getCurrentWord(),
+                result,
+                removedPart,
+                "DP"
+        );
+        context.addRemoval(removal);
+        context.setCurrentWord(result);
+    }
+
+    public void addDisambiguators(List<DisambiguatorInterface> disambiguators) {
+        for (DisambiguatorInterface disambiguator : disambiguators) {
+            this.addDisambiguator(disambiguator);
+        }
+    }
+
+//    public void addDisambiguator(DisambiguatorInterface disambiguator)
+//    {
+//        this.disambiguators.add(disambiguator);
+//    }
+
+    public AbstractDisambiguatePrefixRule addDisambiguator(DisambiguatorInterface disambiguator) {
+        this.disambiguators.add(disambiguator);
+        return this;
+
+    }
 }

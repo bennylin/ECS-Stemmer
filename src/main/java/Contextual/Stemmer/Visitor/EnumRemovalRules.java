@@ -20,24 +20,29 @@
 
 package Contextual.Stemmer.Visitor;
 
-import Contextual.Stemmer.Removal;
-
 /**
- * Remove Inflectional particle.
- * <p/>
- * Asian J. (2007) “Effective Techniques for Indonesian Text Retrieval”. page 60
- *
- * @link http://researchbank.rmit.edu.au/eserv/rmit:6312/Asian.pdf
+ * Created by samiunn on 18/11/14.
  */
-public class RemoveInflectionalParticle extends AbstractRemoveAffixes {
+public enum EnumRemovalRules {
+    REMOVE_DERIVATIONAL_SUFFIX("DS", "/(is|isme|isasi|i|kan|an)$/"),
+    REMOVE_INFLECTIONAL_PARTICLE("P", "/(lah|kah|tah|pun)$/"),
+    REMOVE_INFLECTIONAL_POSSESSIVE_PRONOUN("PP", "/(ku|mu|nya)/"),
+    REMOVE_PLAIN_PREFIX("DP", "/^(di|ke|se)/");
+    private static final int length = EnumRemovalRules.values().length;
+    private final String affixType;
+    private final String regexRule;
 
-    @Override
-    void setRemoval() {
-        this.removal = new Removal(this,
-                context.getCurrentWord(),
-                result,
-                removedPart,
-                EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE.getAffixType());
-        this.regexRule = EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE.getAffixType();
+    EnumRemovalRules(String affixType, String regex) {
+        this.affixType = affixType;
+        this.regexRule = regex;
+    }
+
+
+    public String getAffixType() {
+        return affixType;
+    }
+
+    public String getRegexRule() {
+        return regexRule;
     }
 }

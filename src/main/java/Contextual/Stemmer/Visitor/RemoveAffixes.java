@@ -18,23 +18,28 @@
  * SOFTWARE.
  */
 
-package Contextual.Stemmer;
+package Contextual.Stemmer.Visitor;
+
+import Contextual.Stemmer.Removal;
 
 /**
- * Created by Sami on 18/11/14.
+ * Created by samiunn on 18/11/14.
  */
-public enum ErrorDescriptors {
-    DICTIONARY_FILE_ERROR(111),
-    DICTIONARY_CONTENTS_ERROR(112),
-    UNKNOWN_ERROR(221);
+public class RemoveAffixes extends AbstractRemoveAffixes {
+    String affixType, regexRule;
 
-    private final int errCode;
-
-    ErrorDescriptors(int errCode) {
-        this.errCode = errCode;
+    public RemoveAffixes(EnumRemovalRules rulesEnum) {
+        this.affixType = rulesEnum.getAffixType();
+        this.regexRule = rulesEnum.getRegexRule();
     }
 
-    public int getErrCode() {
-        return errCode;
+    @Override
+    void setRemoval() {
+        this.removal = new Removal(this,
+                context.getCurrentWord(),
+                result,
+                removedPart,
+                affixType);
     }
+
 }

@@ -20,8 +20,15 @@
 
 package Contextual.Stemmer.Visitor;
 
+import Contextual.Stemmer.Morphology.Disambiguator.DisambiguatorInterface;
+
+import java.util.Arrays;
+
 /**
  * Created by Sami on 17/11/14.
  */
-public class PrefixDisambiguator {
+public class PrefixDisambiguator extends AbstractDisambiguatePrefixRule {
+    public PrefixDisambiguator(DisambiguatorInterface[] disambiguators) {
+        this.addDisambiguators(Arrays.asList(disambiguators));
+    }
 }
