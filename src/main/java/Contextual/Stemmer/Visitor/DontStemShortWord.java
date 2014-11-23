@@ -20,8 +20,21 @@
 
 package Contextual.Stemmer.Visitor;
 
+import Contextual.Stemmer.ContextInterface;
+
 /**
  * Created by Sami on 17/11/14.
  */
-public class DontStemShortWord {
+public class DontStemShortWord implements VisitorInterface {
+
+    @Override
+    public void visit(ContextInterface context) {
+        if (this.isShortWord(context.getCurrentWord())) {
+            context.stopProcess();
+        }
+    }
+
+    protected boolean isShortWord(String word) {
+        return (word.length() <= 3);
+    }
 }

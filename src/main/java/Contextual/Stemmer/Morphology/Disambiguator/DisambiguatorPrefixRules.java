@@ -25,7 +25,7 @@ package Contextual.Stemmer.Morphology.Disambiguator;
  */
 public class DisambiguatorPrefixRules implements DisambiguatorInterface {
 
-    public DisambiguatorPrefixRules() {
+    public DisambiguatorPrefixRules(String regex1, String regex2, String matches) {
         String[] test = new String[5];
 
     }
@@ -33,6 +33,11 @@ public class DisambiguatorPrefixRules implements DisambiguatorInterface {
 
     @Override
     public String disambiguate(String word) {
+        return null;
+    }
+
+    @Override
+    public DisambiguatorInterface addAmbiguator() {
         return null;
     }
 }

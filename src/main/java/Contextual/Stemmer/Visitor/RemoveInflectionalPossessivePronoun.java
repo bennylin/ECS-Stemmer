@@ -20,42 +20,20 @@
 
 package Contextual.Stemmer.Visitor;
 
-import Contextual.Stemmer.ContextInterface;
 import Contextual.Stemmer.Removal;
 
 /**
  * Created by Sami on 17/11/14.
  */
-public class RemoveInflectionalPossessivePronoun implements VisitorInterface {
+public class RemoveInflectionalPossessivePronoun extends AbstractRemoveAffixes {
 
     @Override
-    public void visit(ContextInterface context) {
-//        String currentWord = context.getCurrentWord();
-        String result = this.remove(context.getCurrentWord());
-        //context.getCurrent could be tried on creating new currentWord string after all functions working
-        if (!result.equals(context.getCurrentWord())) {
-            String removedPart = context.getCurrentWord().replaceAll("/" + result + "/", "");
-
-            Removal removal = new Removal(
-                    this,
-                    context.getCurrentWord(),
-                    result,
-                    removedPart,
-                    "PP"
-            );
-
-            context.addRemoval(removal);
-            context.setCurrentWord(result);
-        }
-
-    }
-
-    /**
-     * Remove inflectional possessive pronoun : ku|mu|nya
-     *
-     * @param string $word
-     */
-    public String remove(String word) {
-        return word.replaceAll("/(ku|mu|nya)/", "");
+    void setRemoval() {
+        this.removal = new Removal(this,
+                context.getCurrentWord(),
+                result,
+                removedPart,
+                EnumRemovalRules.REMOVE_INFLECTIONAL_POSSESSIVE_PRONOUN.getAffixType());
+        this.regexRule = EnumRemovalRules.REMOVE_INFLECTIONAL_POSSESSIVE_PRONOUN.getAffixType();
     }
 }

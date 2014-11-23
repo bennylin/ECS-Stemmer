@@ -27,5 +27,6 @@ public interface DisambiguatorInterface {
     final String regexRules = new String();
 
     public String disambiguate(String word);
+//    public DisambiguatorInterface addAmbiguator(DisambiguatorInterface);
 
 }

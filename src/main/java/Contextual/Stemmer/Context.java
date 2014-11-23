@@ -37,7 +37,7 @@ public class Context implements ContextInterface, VisitableInterface {
     protected List<RemovalInterface> removals;
     protected DictionaryInterface dictionary;
     protected VisitorProvider visitorProvider;
-    protected VisitorInterface[] visitors, suffixVisitors, prefixVisitors;
+    protected List<VisitorInterface> visitors, suffixVisitors, prefixVisitors;
     protected String result;
 
     public Context(String originalWord,
@@ -56,7 +56,7 @@ public class Context implements ContextInterface, VisitableInterface {
     }
 
     protected void initVisitors() {
-        this.visitors = this.visitorProvider.getVisitors();
+        this.visitors.add(visitorProvider.getVisitors());
         this.suffixVisitors = this.visitorProvider.getSuffixVisitors();
         this.prefixVisitors = this.visitorProvider.getPrefixVisitors();
         //to be implemented after finishing up VisitorProvider
@@ -112,9 +112,10 @@ public class Context implements ContextInterface, VisitableInterface {
             }
         }
 
-        for ($this -> removals as $i =>$removal){
-            if ($removal -> getAffixType() == 'DP') {
-                unset($this -> removals[$i]);
-            }
-        }
+//        for ($this -> removals as $i =>$removal){
+//            if ($removal -> getAffixType() == 'DP') {
+//                unset($this -> removals[$i]);
+//            }
+//        }
     }
+}

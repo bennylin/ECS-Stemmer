@@ -28,17 +28,14 @@ import java.util.List;
  * Created by Sami on 17/11/14.
  */
 public class VisitorProvider {
-    protected List<DontStemShortWord> visitors;
+    protected List<VisitorInterface> visitors;
     protected List<RemoveAffixes> suffixVisitors;
+
+
     protected List<RemoveAffixes> prefixVisitors;
 
     public VisitorProvider() {
         this.initVisitors();
-    }
-
-    public void setSuffixVisitors(RemoveAffixes suffixVisitor) {
-        //setter for the list of suffixes
-        this.suffixVisitors.add(suffixVisitor);
     }
 
     protected void initVisitors() {
@@ -53,6 +50,24 @@ public class VisitorProvider {
 
 
     }
+
+    public List<VisitorInterface> getVisitors() {
+        return this.visitors;
+    }
+
+    public List<RemoveAffixes> getPrefixVisitors() {
+        return this.prefixVisitors;
+    }
+
+    public List<RemoveAffixes> getSuffixVisitors() {
+        return this.suffixVisitors;
+    }
+
+    public void setSuffixVisitors(RemoveAffixes suffixVisitor) {
+        //setter for the list of suffixes
+        this.suffixVisitors.add(suffixVisitor);
+    }
+
 
     //will be implemented after finishing up removeinflectional classes
 
