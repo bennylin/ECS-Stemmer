@@ -31,4 +31,8 @@ public class PrefixDisambiguator extends AbstractDisambiguatePrefixRule {
     public PrefixDisambiguator(DisambiguatorInterface[] disambiguators) {
         this.addDisambiguators(Arrays.asList(disambiguators));
     }
+
+    public PrefixDisambiguator(DisambiguatorInterface disambiguator) {
+        this.addDisambiguator(disambiguator);
+    }
 }

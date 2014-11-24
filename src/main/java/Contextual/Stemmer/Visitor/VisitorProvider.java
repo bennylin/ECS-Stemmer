@@ -21,6 +21,7 @@
 package Contextual.Stemmer.Visitor;
 
 import Contextual.Stemmer.Morphology.Disambiguator.DisambiguatorPrefixRules;
+import Contextual.Stemmer.Morphology.Disambiguator.EnumDisambiguateRules;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ import java.util.List;
  * Created by Sami on 17/11/14.
  */
 public class VisitorProvider {
-    protected List<VisitorInterface> visitors;
+    protected List<DontStemShortWord> visitors;
     protected List<RemoveAffixes> suffixVisitors;
 
 
@@ -46,12 +47,12 @@ public class VisitorProvider {
         this.suffixVisitors.add(new RemoveAffixes(EnumRemovalRules.REMOVE_DERIVATIONAL_SUFFIX)); // {i|kan|an}
 
         this.prefixVisitors.add(new RemoveAffixes(EnumRemovalRules.REMOVE_PLAIN_PREFIX));
-        this.prefixVisitors.add(new PrefixDisambiguator(new DisambiguatorPrefixRules));
+        this.prefixVisitors.add(new PrefixDisambiguator(new DisambiguatorPrefixRules(EnumDisambiguateRules.PREFIX_RULE_1A)));
 
 
     }
 
-    public List<VisitorInterface> getVisitors() {
+    public List<DontStemShortWord> getVisitors() {
         return this.visitors;
     }
 

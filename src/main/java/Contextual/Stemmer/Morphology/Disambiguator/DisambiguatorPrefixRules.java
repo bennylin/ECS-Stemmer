@@ -30,14 +30,18 @@ public class DisambiguatorPrefixRules implements DisambiguatorInterface {
 
     }
 
+    public DisambiguatorPrefixRules(EnumDisambiguateRules enumRule) {
+
+    }
+
 
     @Override
     public String disambiguate(String word) {
         return null;
     }
 
-    @Override
-    public DisambiguatorInterface addAmbiguator() {
-        return null;
-    }
+//    @Override
+//    public DisambiguatorInterface addAmbiguator() {
+//        return null;
+//    }
 }

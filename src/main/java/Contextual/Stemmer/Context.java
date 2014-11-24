@@ -56,9 +56,9 @@ public class Context implements ContextInterface, VisitableInterface {
     }
 
     protected void initVisitors() {
-        this.visitors.add(visitorProvider.getVisitors());
-        this.suffixVisitors = this.visitorProvider.getSuffixVisitors();
-        this.prefixVisitors = this.visitorProvider.getPrefixVisitors();
+        this.visitors.addAll(visitorProvider.getVisitors());
+        this.suffixVisitors.addAll(this.visitorProvider.getSuffixVisitors());
+        this.prefixVisitors.addAll(this.visitorProvider.getPrefixVisitors());
         //to be implemented after finishing up VisitorProvider
     }
 

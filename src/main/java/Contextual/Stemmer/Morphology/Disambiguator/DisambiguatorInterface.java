@@ -20,10 +20,12 @@
 
 package Contextual.Stemmer.Morphology.Disambiguator;
 
+import Contextual.Stemmer.Visitor.VisitorInterface;
+
 /**
  * Created by Sami on 17/11/14.
  */
-public interface DisambiguatorInterface {
+public interface DisambiguatorInterface extends VisitorInterface {
     final String regexRules = new String();
 
     public String disambiguate(String word);
