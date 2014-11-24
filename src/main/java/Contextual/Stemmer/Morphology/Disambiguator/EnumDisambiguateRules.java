@@ -61,7 +61,7 @@ public enum EnumDisambiguateRules {
     PREFIX_RULE_26A("/^pem([aiueo])(.*)$/", "", "m"),
     PREFIX_RULE_26B("/^pem([aiueo])(.*)$/", "", "p"),
     PREFIX_RULE_27("/^pen([cdjz])(.*)$/", "", ""),
-    PREFIX_RULE_28A("/^pen([aiueo])(.*)$/", "", "n"),
+    PREFIX_RULE_28A("/^pen([aiueo])(.*)$/", "", "n");
     //    PREFIX_RULE_28B(""),
 //    PREFIX_RULE_29(""),
 //    PREFIX_RULE_30A(""),
