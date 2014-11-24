@@ -18,6 +18,10 @@
  * SOFTWARE.
  */
 
+/**
+ * Created by Sami on 17/11/14.
+ */
+
 package Contextual.Stemmer;
 
 import Contextual.Stemmer.ConfixStripping.PrecedenceAdjustmentSpecification;
@@ -31,9 +35,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-/**
- * Created by Sami on 17/11/14.
- */
+
 public class Context implements ContextInterface, VisitableInterface {
 
     protected boolean processIsStopped = false;
@@ -103,7 +105,7 @@ public class Context implements ContextInterface, VisitableInterface {
     /**
      * Execute stemming process; the result can be retrieved with getResult()
      *
-     * @return void
+     * return void
      */
     public void execute() {
         // step 1 - 5
@@ -170,18 +172,18 @@ public class Context implements ContextInterface, VisitableInterface {
     }//=================================end of startStemmingProcess()=================================
 
     protected String acceptVisitors(VisitorInterface[] visitors) {
-        for (VisitorInterface visitor : visitors) {
 
+        for (VisitorInterface visitor : visitors) {
             this.accept(visitor);
 
-            if (this.getDictionary().contains(this.getCurrentWord()) {
+            if (this.getDictionary().contains(this.getCurrentWord()))
                 return this.getCurrentWord();
-            }
 
             if (this.processIsStopped) {
                 return this.getCurrentWord();
             }
         }
+        return null;
     }
 
     protected void removePrefixes() {
@@ -266,7 +268,7 @@ public class Context implements ContextInterface, VisitableInterface {
     /**
      * Restore prefix to proceed with ECS loop pengembalian akhiran
      *
-     * @return void
+     * return void
      */
     public void restorePrefix() {
         for (RemovalInterface removal : this.removals) {
