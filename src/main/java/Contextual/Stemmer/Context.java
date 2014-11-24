@@ -20,6 +20,7 @@
 
 package Contextual.Stemmer;
 
+import Contextual.Stemmer.ConfixStripping.PrecedenceAdjustmentSpecification;
 import Contextual.Stemmer.Dictionary.DictionaryInterface;
 import Contextual.Stemmer.Visitor.VisitableInterface;
 import Contextual.Stemmer.Visitor.VisitorInterface;
@@ -38,6 +39,8 @@ public class Context implements ContextInterface, VisitableInterface {
     protected DictionaryInterface dictionary;
     protected VisitorProvider visitorProvider;
     protected List<VisitorInterface> visitors, suffixVisitors, prefixVisitors;
+
+
     protected String result;
 
     public Context(String originalWord,
@@ -94,9 +97,126 @@ public class Context implements ContextInterface, VisitableInterface {
         return (RemovalInterface[]) this.removals.toArray();
     }
 
-    public void accept(VisitorInterface visitor) {
-
+    public String getResult() {
+        return result;
     }
+
+    /**
+     * Execute stemming process; the result can be retrieved with getResult()
+     *
+     * @return void
+     */
+    public void execute() {
+        // step 1 - 5
+        this.startStemmingProcess();
+
+        // step 6
+        if (this.dictionary.contains(this.getCurrentWord())) {
+            this.result = this.getCurrentWord();
+        } else {
+            this.result = this.originalWord;
+        }
+    }
+
+    protected void startStemmingProcess() {
+        // step 1
+        if (this.dictionary.contains(this.getCurrentWord())) {
+            return;
+        }
+
+        this.acceptVisitors((VisitorInterface[]) this.visitors.toArray());
+
+        if (this.dictionary.contains(this.getCurrentWord())) {
+            return;
+        }
+
+        PrecedenceAdjustmentSpecification csPrecedenceAdjustmentSpecification = new PrecedenceAdjustmentSpecification();
+
+        /*
+         * Confix Stripping
+         * Try to remove prefix before suffix if the specification is met
+         */
+        if (csPrecedenceAdjustmentSpecification.isSatisfiedBy(this.getOriginalWord())) {
+
+//            this.removePrexies();
+
+            // step 4, 5
+            $this -> removePrefixes();
+            if ($this -> dictionary -> contains($this -> getCurrentWord())) {
+                return;
+            }
+
+            // step 2, 3
+            $this -> removeSuffixes();
+            if ($this -> dictionary -> contains($this -> getCurrentWord())) {
+                return;
+            } else {
+                // if the trial is failed, restore the original word
+                // and continue to normal rule precedence (suffix first, prefix afterwards)
+                $this -> setCurrentWord($this -> originalWord);
+                $this -> removals = array();
+            }
+        }
+        // step 2, 3
+        $this -> removeSuffixes();
+        if ($this -> dictionary -> contains($this -> getCurrentWord())) {
+            return;
+        }
+
+        // step 4, 5
+        $this -> removePrefixes();
+        if ($this -> dictionary -> contains($this -> getCurrentWord())) {
+            return;
+        }
+
+        // ECS loop pengembalian akhiran
+        $this -> loopPengembalianAkhiran();
+    }
+
+    protected String acceptVisitors(VisitorInterface[] visitors) {
+        for (VisitorInterface visitor : visitors) {
+
+            this.accept(visitor);
+
+            if (this.getDictionary().contains(this.getCurrentWord()) {
+                return this.getCurrentWord();
+            }
+
+            if (this.processIsStopped) {
+                return this.getCurrentWord();
+            }
+        }
+    }
+
+    protected void removePrefixes() {
+        for (int i = 0; i < 3; i++) {
+            this.acceptPrefixVisitors(this.prefixVisitors);
+            if (this.dictionary.contains(this.getCurrentWord()))
+                return;
+        }
+    }
+
+    protected String acceptPrefixVisitors(VisitorInterface[] visitors) {
+        int removalCount = this.removals.size();
+
+        for (VisitorInterface visitor : visitors) {
+            this.accept(visitor);
+
+            if (this.getDictionary().contains(this.getCurrentWord()))
+                return this.getCurrentWord();
+
+            if (this.processIsStopped)
+                return this.getCurrentWord();
+
+            if (this.removals.size() > removalCount)
+                return;
+        }
+    }
+
+    public void accept(VisitorInterface visitor) {
+        visitor.visit(this);
+    }
+
 
     /**
      * Restore prefix to proceed with ECS loop pengembalian akhiran

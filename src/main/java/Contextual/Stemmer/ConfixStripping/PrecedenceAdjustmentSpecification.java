@@ -20,8 +20,32 @@
 
 package Contextual.Stemmer.ConfixStripping;
 
+import Contextual.Stemmer.Specification.SpecificationInterface;
+
 /**
  * Created by Sami on 17/11/14.
  */
-public class PrecedenceAdjustmentSpecification {
+public class PrecedenceAdjustmentSpecification implements SpecificationInterface {
+    /**
+     * @param string $value
+     * @return boolean
+     */
+
+    public boolean isSatisfiedBy(String value) {
+
+
+        String[] regexRules = {"/^be(.*)lah$/",
+                "/^be(.*)an$/",
+                "/^me(.*)i$/",
+                "/^di(.*)i$/",
+                "/^pe(.*)i$/",
+                "/^ter(.*)i$/"
+        };
+        for (String rule : regexRules) {
+            if (preg_match(rule, value))
+                return true;
+        }
+
+        return false;
+    }
 }
