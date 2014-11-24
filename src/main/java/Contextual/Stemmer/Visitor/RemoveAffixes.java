@@ -27,10 +27,15 @@ import Contextual.Stemmer.Removal;
  */
 public class RemoveAffixes extends AbstractRemoveAffixes {
     String affixType, regexRule;
+    VisitorInterface visitor;
 
     public RemoveAffixes(EnumRemovalRules rulesEnum) {
         this.affixType = rulesEnum.getAffixType();
         this.regexRule = rulesEnum.getRegexRule();
+    }
+
+    public RemoveAffixes(VisitorInterface visitor) {
+        this.visitor = visitor;
     }
 
     @Override
