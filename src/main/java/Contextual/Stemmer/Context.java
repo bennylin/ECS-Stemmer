@@ -22,9 +22,12 @@ package Contextual.Stemmer;
 
 import Contextual.Stemmer.ConfixStripping.PrecedenceAdjustmentSpecification;
 import Contextual.Stemmer.Dictionary.DictionaryInterface;
+import Contextual.Stemmer.Visitor.EnumRemovalRules;
 import Contextual.Stemmer.Visitor.VisitableInterface;
 import Contextual.Stemmer.Visitor.VisitorInterface;
 import Contextual.Stemmer.Visitor.VisitorProvider;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -52,10 +55,6 @@ public class Context implements ContextInterface, VisitableInterface {
         this.visitorProvider = visitorProvider;
 
         this.initVisitors();
-    }
-
-    public void execute() {
-
     }
 
     protected void initVisitors() {
@@ -138,40 +137,37 @@ public class Context implements ContextInterface, VisitableInterface {
          */
         if (csPrecedenceAdjustmentSpecification.isSatisfiedBy(this.getOriginalWord())) {
 
-//            this.removePrexies();
-
             // step 4, 5
-            $this -> removePrefixes();
-            if ($this -> dictionary -> contains($this -> getCurrentWord())) {
+            this.removePrefixes();
+            if (this.dictionary.contains(this.getCurrentWord())) {
                 return;
             }
 
             // step 2, 3
-            $this -> removeSuffixes();
-            if ($this -> dictionary -> contains($this -> getCurrentWord())) {
+            this.removeSuffixes();
+            if (this.dictionary.contains(this.getCurrentWord()))
                 return;
-            } else {
+            else {
                 // if the trial is failed, restore the original word
                 // and continue to normal rule precedence (suffix first, prefix afterwards)
-                $this -> setCurrentWord($this -> originalWord);
-                $this -> removals = array();
+                this.setCurrentWord(this.originalWord);
+                this.removals = null;
             }
         }
-        // step 2, 3
-        $this -> removeSuffixes();
-        if ($this -> dictionary -> contains($this -> getCurrentWord())) {
-            return;
-        }
 
-        // step 4, 5
-        $this -> removePrefixes();
-        if ($this -> dictionary -> contains($this -> getCurrentWord())) {
+        // step 2, 3
+        this.removeSuffixes();
+        if (this.dictionary.contains(this.getCurrentWord()))
             return;
-        }
+
+        //step 4, 5
+        this.removePrefixes();
+        if (this.dictionary.contains(this.getCurrentWord()))
+            return;
 
         // ECS loop pengembalian akhiran
-        $this -> loopPengembalianAkhiran();
-    }
+        this.loopPengembalianAkhiran();
+    }//=================================end of startStemmingProcess()=================================
 
     protected String acceptVisitors(VisitorInterface[] visitors) {
         for (VisitorInterface visitor : visitors) {
@@ -190,7 +186,7 @@ public class Context implements ContextInterface, VisitableInterface {
 
     protected void removePrefixes() {
         for (int i = 0; i < 3; i++) {
-            this.acceptPrefixVisitors(this.prefixVisitors);
+            this.acceptPrefixVisitors((VisitorInterface[]) this.prefixVisitors.toArray());
             if (this.dictionary.contains(this.getCurrentWord()))
                 return;
         }
@@ -209,14 +205,63 @@ public class Context implements ContextInterface, VisitableInterface {
                 return this.getCurrentWord();
 
             if (this.removals.size() > removalCount)
-                return;
+                break;
         }
+        return null;
+    }
+
+    /**
+     * ECS Loop Pengembalian Akhiran
+     */
+    public void loopPengembalianAkhiran() {
+        // restore prefix to form [DP+[DP+[DP]]] + Root word
+        this.restorePrefix();
+
+        //if there's a problem, try to check if the original list is also reversed
+        final ImmutableList<RemovalInterface> _removals = ImmutableList.copyOf(removals);
+        List<RemovalInterface> reversedRemovals = Lists.reverse(_removals);
+        final String _currentWord = this.getCurrentWord();
+
+        for (RemovalInterface removal : reversedRemovals) {
+            if (!this.isSuffixRemoval(removal))
+                continue;
+
+            if (removal.getRemovedPart().equals("kan")) {
+                this.setCurrentWord(removal.getResult().concat("k"));
+
+                // step 4, 5
+                this.removePrefixes();
+                if (this.dictionary.contains((this.getCurrentWord())))
+                    return;
+
+                this.setCurrentWord(removal.getResult().concat("kan"));
+            } else
+                this.setCurrentWord(removal.getSubject());
+
+            // step 4, 5
+            this.removePrefixes();
+            if (this.dictionary.contains(this.getCurrentWord()))
+                return;
+            this.removals = _removals;
+            this.setCurrentWord(_currentWord);
+        }
+    }
+
+    private boolean isSuffixRemoval(RemovalInterface removal) {
+        String removalAffixType = removal.getAffixType();
+        return removalAffixType.equals(EnumRemovalRules.REMOVE_DERIVATIONAL_SUFFIX.getAffixType()) ||
+                removalAffixType.equals(EnumRemovalRules.REMOVE_INFLECTIONAL_PARTICLE.getAffixType()) ||
+                removalAffixType.equals(EnumRemovalRules.REMOVE_INFLECTIONAL_POSSESSIVE_PRONOUN.getAffixType());
     }
 
     public void accept(VisitorInterface visitor) {
         visitor.visit(this);
     }
 
+
+    public void removeSuffixes() {
+        System.out.println("Removing suffixes");
+    }
 
     /**
      * Restore prefix to proceed with ECS loop pengembalian akhiran
@@ -231,11 +276,10 @@ public class Context implements ContextInterface, VisitableInterface {
                 break;
             }
         }
-
-//        for ($this -> removals as $i =>$removal){
-//            if ($removal -> getAffixType() == 'DP') {
-//                unset($this -> removals[$i]);
-//            }
-//        }
+        for (RemovalInterface removal : removals) {
+            if (removal.getAffixType().equals("DP")) {
+                this.removals.remove(removal);
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@
 package Contextual.Stemmer.ConfixStripping;
 
 import Contextual.Stemmer.Specification.SpecificationInterface;
+import Contextual.Stemmer.StringUtils;
 
 /**
  * Created by Sami on 17/11/14.
@@ -33,7 +34,6 @@ public class PrecedenceAdjustmentSpecification implements SpecificationInterface
 
     public boolean isSatisfiedBy(String value) {
 
-
         String[] regexRules = {"/^be(.*)lah$/",
                 "/^be(.*)an$/",
                 "/^me(.*)i$/",
@@ -42,8 +42,7 @@ public class PrecedenceAdjustmentSpecification implements SpecificationInterface
                 "/^ter(.*)i$/"
         };
         for (String rule : regexRules) {
-            if (preg_match(rule, value))
-                return true;
+            return StringUtils.preg_match(rule, value);
         }
 
         return false;

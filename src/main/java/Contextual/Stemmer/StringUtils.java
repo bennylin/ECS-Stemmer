@@ -69,4 +69,8 @@ public class StringUtils {
         return text;
     }
 
+    public static boolean preg_match(String rule, String value) {
+        return value.matches(rule);
+    }
+
 }
