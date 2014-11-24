@@ -20,8 +20,13 @@
 
 package Contextual.Stemmer;
 
+import Contextual.Stemmer.Cache.ArrayCache;
+
 /**
  * Created by Sami on 17/11/14.
  */
 public class CachedStemmer {
+    public CachedStemmer(ArrayCache arrayCache, Stemmer stemmer) {
+
+    }
 }

@@ -36,7 +36,7 @@ public class StemmerFactory {
     protected boolean debug = true;
     protected String DICT_FILENAME = "../kata-dasar.txt";
 
-    public Stemmer createStemmer() {
+    public void createStemmer() {
         String words[] = this.getWords();
         ArrayDictionary dictionary = new ArrayDictionary(words);
         Stemmer stemmer = new Stemmer(dictionary);
