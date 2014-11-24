@@ -30,10 +30,10 @@ import java.util.List;
  */
 public class VisitorProvider {
     protected List<DontStemShortWord> visitors;
-    protected List<RemoveAffixes> suffixVisitors;
+    protected List<VisitorInterface> suffixVisitors;
 
 
-    protected List<RemoveAffixes> prefixVisitors;
+    protected List<VisitorInterface> prefixVisitors;
 
     public VisitorProvider() {
         this.initVisitors();
@@ -56,11 +56,11 @@ public class VisitorProvider {
         return this.visitors;
     }
 
-    public List<RemoveAffixes> getPrefixVisitors() {
+    public List<VisitorInterface> getPrefixVisitors() {
         return this.prefixVisitors;
     }
 
-    public List<RemoveAffixes> getSuffixVisitors() {
+    public List<VisitorInterface> getSuffixVisitors() {
         return this.suffixVisitors;
     }
 
